@@ -73,15 +73,14 @@ package
             }
         }
 
-        private static function lineRayIntersection(p1 : Point, p2 : Point, p3 : Point, p4 : Point) : uint
+        private static function lineRayIntersection(p1 : Point, p2 : Point, p3 : Point, p4 : Point) : Number
         {
             var denom : Number = (p4.y - p3.y)*(p2.x - p1.x) - (p4.x - p3.x)*(p2.y - p1.y);
             if (denom == 0)
             {
-                return null;
+                return NaN;
             }
 
-            var ua : Number = ((p4.x - p3.x)*(p1.y - p3.y) - (p4.y - p3.y)*(p1.x - p3.x)) / denom;
             var ub : Number = ((p2.x - p1.x)*(p1.y - p3.y) - (p2.y - p1.y)*(p1.x - p3.x)) / denom;
 
             if(ub >= 0 && ub <= 1)
@@ -90,7 +89,32 @@ package
             }
             else
             {
-                return null;
+                return NaN;
+            }
+        }
+
+        private static function rayHalfSpaceIntersection(p1 : Point, p2 : Point, p3 : Point, p4 : Point) : Number
+        {
+            var normal : Point = new Point(p4.y - p3.y, p3.x - p4.x);
+            var traj : Point = p2.subtract(p1);
+            if(pointDot(traj, normal) >= 0)
+                return NaN;
+
+            var denom : Number = (p4.y - p3.y)*(p2.x - p1.x) - (p4.x - p3.x)*(p2.y - p1.y);
+            if (denom == 0)
+            {
+                return NaN;
+            }
+
+            var ua : Number = ((p4.x - p3.x)*(p1.y - p3.y) - (p4.y - p3.y)*(p1.x - p3.x)) / denom;
+
+            if(ua >= -100000 && ua <= 1)
+            {
+                return ua;
+            }
+            else
+            {
+                return NaN;
             }
         }
 
@@ -259,63 +283,46 @@ package
                 var rib0 : LineSegment = ribGetLineSegment(currentQuad);
                 var rib1 : LineSegment = ribGetLineSegment(currentQuad + 1);
 
+                var u0 : Number = rayHalfSpaceIntersection(currentPos, endPos, rib0.p0, rib1.p0);
+                var u1 : Number = rayHalfSpaceIntersection(currentPos, endPos, rib1.p1, rib0.p1);
+                var u2 : Number = rayHalfSpaceIntersection(currentPos, endPos, rib0.p1, rib0.p0);
+                var u3 : Number = rayHalfSpaceIntersection(currentPos, endPos, rib1.p0, rib1.p1);
+
                 var traj : Point = endPos.subtract(currentPos);
 
-                var normal : Point = new Point(rib1.p0.y - rib0.p0.y, rib0.p0.x - rib1.p0.x);
-                if(pointDot(traj, normal) < 0)
+                if(!isNaN(u0) && (isNaN(u2) || u0 <= u2) && (isNaN(u3) || u0 <= u3))
                 {
-                    p = lineSegmentIntersection(rib1.p0, rib0.p0, currentPos, endPos);
-                    if(p)
-                    {
-                        trace("----- TL -------");
-                        result.resultingQuad = currentQuad;
-                        result.intersection = true;
-                        result.intersectionPoint = p;
-                        result.normal = normal;
-                        return result;
-                    }
+                    trace("% " + u0 + ", " + u1 + ", " + u2 + ", " + u3);
+                    result.resultingQuad = currentQuad;
+                    result.intersection = true;
+                    result.intersectionPoint = currentPos.add(pointMul(u0, traj));
+                    result.normal = new Point(rib1.p0.y - rib0.p0.y, rib0.p0.x - rib1.p0.x);
+                    return result;
                 }
-                normal = new Point(rib0.p1.y - rib1.p1.y, rib1.p1.x - rib0.p1.x);
-                if(pointDot(traj, normal) < 0)
+                if(!isNaN(u1) && (isNaN(u2) || u1 <= u2) && (isNaN(u3) || u1 <= u3))
                 {
-                    p = lineSegmentIntersection(rib1.p1, rib0.p1, currentPos, endPos);
-                    if(p)
-                    {
-                        trace("----- TR -------");
-                        result.resultingQuad = currentQuad;
-                        result.intersection = true;
-                        result.intersectionPoint = p;
-                        result.normal = normal;
-                        return result;
-                    }
+                    result.resultingQuad = currentQuad;
+                    result.intersection = true;
+                    result.intersectionPoint = currentPos.add(pointMul(u1, traj));
+                    result.normal = new Point(rib0.p1.y - rib1.p1.y, rib1.p1.x - rib0.p1.x);
+                    return result;
                 }
 
                 restart = false;
 
-                normal = new Point(rib0.p0.y - rib0.p1.y, rib0.p1.x - rib0.p0.x);
-                if(pointDot(traj, normal) < 0)
+                if(!isNaN(u2))
                 {
-                    p = lineSegmentIntersection(rib0.p0, rib0.p1, currentPos, endPos);
-                    if(p)
-                    {
-                        trace("----- T- -------");
-                        currentQuad -= 1;
-                        currentPos = p;
-                        restart = true;
-                    }
+                    trace("----- T- -------");
+                    currentQuad -= 1;
+                    currentPos = currentPos.add(pointMul(u2, traj));
+                    restart = true;
                 }
-
-                normal = new Point(rib1.p1.y - rib1.p0.y, rib1.p0.x - rib1.p1.x);
-                if(pointDot(traj, normal) < 0)
+                if(!isNaN(u3))
                 {
-                    p = lineSegmentIntersection(rib1.p0, rib1.p1, currentPos, endPos);
-                    if(p)
-                    {
-                        trace("----- T+ -------");
-                        currentQuad += 1;
-                        currentPos = p;
-                        restart = true;
-                    }
+                    trace("----- T+ -------");
+                    currentQuad += 1;
+                    currentPos = currentPos.add(pointMul(u3, traj));
+                    restart = true;
                 }
             } while(restart);
 
