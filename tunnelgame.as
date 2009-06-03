@@ -29,6 +29,8 @@ package
 
         private var tunnel : Tunnel;
 
+        private var blackBars : Shape;
+
         public function tunnelgame()
         {
             stage.quality = StageQuality.LOW;
@@ -38,8 +40,8 @@ package
             //var path : Path = Path.createRandomPath(16, 100);
 
             graphics.lineStyle(1, 0x000000);
-            graphics.drawRect(0, 0, 480, 480);
-            graphics.drawRect(-4, -4, 488, 488);
+            graphics.drawRect(-1, -1, 481, 481);
+            graphics.drawRect(-5, -5, 489, 489);
 
             world = new Sprite();
             addChild(world);
@@ -82,6 +84,18 @@ package
             tunnel.drawQuads(pathShape.graphics);
 
             stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+
+            blackBars = new Shape();
+            blackBars.graphics.lineStyle();
+            var barSize : int = 300;
+            blackBars.graphics.beginFill(0x000000);
+            blackBars.graphics.drawRect(-barSize, 0, barSize, 480);
+            blackBars.graphics.drawRect(480, 0, barSize, 480);
+            blackBars.graphics.drawRect(-barSize, -barSize, barSize*2+480, barSize);
+            blackBars.graphics.drawRect(-barSize, 480, barSize*2+480, barSize);
+            blackBars.graphics.endFill();
+            addChild(blackBars);
+            blackBars.visible = false;
         }
         private function mouseDown(event : MouseEvent) : void
         {
@@ -128,6 +142,9 @@ package
                 controller.left = true;
             else if(event.keyCode == Keyboard.RIGHT)
                 controller.right = true;
+
+            if(event.keyCode == 66) // B
+                blackBars.visible = !blackBars.visible;
         }
 
         private function keyUp(event : KeyboardEvent) : void
