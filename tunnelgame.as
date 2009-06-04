@@ -29,7 +29,10 @@ package
 
         private var tunnel : Tunnel;
 
-        private var blackBars : Shape;
+        CONFIG::debugging
+        {
+            private var blackBars : Shape;
+        }
 
         public function tunnelgame()
         {
@@ -85,17 +88,20 @@ package
 
             stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
 
-            blackBars = new Shape();
-            blackBars.graphics.lineStyle();
-            var barSize : int = 300;
-            blackBars.graphics.beginFill(0x000000);
-            blackBars.graphics.drawRect(-barSize, 0, barSize, 480);
-            blackBars.graphics.drawRect(480, 0, barSize, 480);
-            blackBars.graphics.drawRect(-barSize, -barSize, barSize*2+480, barSize);
-            blackBars.graphics.drawRect(-barSize, 480, barSize*2+480, barSize);
-            blackBars.graphics.endFill();
-            addChild(blackBars);
-            blackBars.visible = false;
+            CONFIG::debugging
+            {
+                blackBars = new Shape();
+                blackBars.graphics.lineStyle();
+                var barSize : int = 300;
+                blackBars.graphics.beginFill(0x000000);
+                blackBars.graphics.drawRect(-barSize, 0, barSize, 480);
+                blackBars.graphics.drawRect(480, 0, barSize, 480);
+                blackBars.graphics.drawRect(-barSize, -barSize, barSize*2+480, barSize);
+                blackBars.graphics.drawRect(-barSize, 480, barSize*2+480, barSize);
+                blackBars.graphics.endFill();
+                addChild(blackBars);
+                blackBars.visible = false;
+            }
         }
         private function mouseDown(event : MouseEvent) : void
         {
@@ -143,8 +149,11 @@ package
             else if(event.keyCode == Keyboard.RIGHT)
                 controller.right = true;
 
-            if(event.keyCode == 66) // B
-                blackBars.visible = !blackBars.visible;
+            CONFIG::debugging
+            {
+                if(event.keyCode == 66) // B
+                    blackBars.visible = !blackBars.visible;
+            }
         }
 
         private function keyUp(event : KeyboardEvent) : void
