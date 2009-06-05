@@ -7,6 +7,9 @@ package
     {
         public function Ship(tunnel_ : Tunnel)
         {
+            mouseEnabled = false;
+            mouseChildren = false;
+
             graphics.lineStyle(1, 0x008800);
             graphics.moveTo(-20, -10);
             graphics.lineTo(-20, 10);
