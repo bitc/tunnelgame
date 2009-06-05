@@ -50,7 +50,6 @@ package
             stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
             stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
 
-            spaceKeyDown = false;
             controller = new Controller();
 
             CONFIG::debugging
@@ -74,13 +73,12 @@ package
             world.tick(controller);
         }
 
-        private var spaceKeyDown : Boolean;
         private var controller : Controller;
 
         private function keyDown(event : KeyboardEvent) : void
         {
             if(event.keyCode == Keyboard.SPACE)
-                spaceKeyDown = true;
+                controller.fire = true;
             else if(event.keyCode == Keyboard.UP)
                 controller.up = true;
             else if(event.keyCode == Keyboard.DOWN)
@@ -100,7 +98,7 @@ package
         private function keyUp(event : KeyboardEvent) : void
         {
             if(event.keyCode == Keyboard.SPACE)
-                spaceKeyDown = false;
+                controller.fire = false;
             else if(event.keyCode == Keyboard.UP)
                 controller.up = false;
             else if(event.keyCode == Keyboard.DOWN)
