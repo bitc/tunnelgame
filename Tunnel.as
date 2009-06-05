@@ -16,7 +16,7 @@ package
             maxRibLength = 200;
             //maxRibLength = 400;
 
-            var segmentLength : Number = 700;
+            var segmentLength : Number = 800;
             tunnelBuilder = new TunnelBuilder(segmentLength);
 
             p0 = tunnelBuilder.nextPoint();
@@ -205,6 +205,11 @@ package
         }
 
         private var p0 : Point, p1 : Point, p2 : Point, p3 : Point, p4 : Point;
+
+        public function getP3() : Point
+        {
+            return p3;
+        }
 
         private var ribs : Array;
 
@@ -455,7 +460,8 @@ class TunnelBuilder
 
     public function nextPoint() : Point
     {
-        var angle : Number = lastAngle + Math.random() * Math.PI - Math.PI / 2;
+        var maxAngle : Number = 0.7 * Math.PI;
+        var angle : Number = lastAngle + Math.random() * maxAngle - maxAngle / 2;
         lastAngle = angle;
 
         var nextPoint : Point = new Point(

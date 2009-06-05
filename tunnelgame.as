@@ -12,7 +12,6 @@ package
     import flash.events.Event;
     import flash.ui.Keyboard;
     import flash.events.KeyboardEvent;
-    import flash.events.MouseEvent;
     import flash.geom.Matrix;
     import flash.geom.Point;
 
@@ -20,14 +19,10 @@ package
 
     public class tunnelgame extends Sprite
     {
-        private var pathShape : Shape;
-
         //private var slidingPath : SlidingPath;
         private var circle : Shape;
 
-        private var world : Sprite;
-
-        private var tunnel : Tunnel;
+        private var world : World;
 
         CONFIG::debugging
         {
@@ -48,47 +43,15 @@ package
             graphics.drawRect(-1, -1, 481, 481);
             graphics.drawRect(-5, -5, 489, 489);
 
-            world = new Sprite();
+            world = new World();
             addChild(world);
-
-            pathShape = new Shape();
-            world.addChild(pathShape);
-            pathShape.x = 0;
-            pathShape.y = 0;
 
             stage.addEventListener(Event.ENTER_FRAME, tick);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
             stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
 
-            var windowRadius : Number = 340;
-
-            tunnel = new Tunnel();
-
-            //slidingPath = new SlidingPath(640, windowRadius);
-            circle = new Shape();
-            circle.graphics.lineStyle(1, 0xFF0000);
-            circle.graphics.drawCircle(0, 0, windowRadius);
-            circle.graphics.drawCircle(0, 0, 1);
-            world.addChild(circle);
-
-            //slidingPath.getPath().draw(pathShape.graphics);
-            //slidingPath.drawTangents(pathShape.graphics);
-
             spaceKeyDown = false;
             controller = new Controller();
-            ship = new Ship(tunnel);
-            //ship.x = slidingPath.getPos().x;
-            //ship.y = slidingPath.getPos().y;
-
-            ship.x = tunnel.getPos(1).x;
-            ship.y = tunnel.getPos(1).y;
-            ship.tunnelQuad = tunnel.getRibsPerSegment();
-
-            world.addChild(ship);
-
-            tunnel.drawQuads(pathShape.graphics);
-
-            stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
 
             CONFIG::debugging
             {
@@ -105,34 +68,10 @@ package
                 blackBars.visible = false;
             }
         }
-        private function mouseDown(event : MouseEvent) : void
-        {
-            tunnel.nextSegment();
-            pathShape.graphics.clear();
-            tunnel.drawQuads(pathShape.graphics);
-        }
-
-        private var ship : Ship;
 
         private function tick(event : Event) : void
         {
-            if(!spaceKeyDown)
-            {
-                //if(slidingPath.advance(3))
-                //{
-                //    pathShape.graphics.clear();
-                //    //slidingPath.getPath().draw(pathShape.graphics);
-                //    slidingPath.drawTangents(pathShape.graphics);
-                //}
-            }
-            //var pos : Point = slidingPath.getPos();
-            ship.tick(controller);
-            var pos : Point = new Point(ship.x, ship.y);
-            circle.x = pos.x;
-            circle.y = pos.y;
-
-            world.x = 240 - pos.x;
-            world.y = 240 - pos.y;
+            world.tick(controller);
         }
 
         private var spaceKeyDown : Boolean;

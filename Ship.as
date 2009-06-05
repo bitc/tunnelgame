@@ -26,8 +26,8 @@ package
             vely = 0;
         }
 
-        private var velx : Number;
-        private var vely : Number;
+        public var velx : Number;
+        public var vely : Number;
 
         private var tunnel : Tunnel;
 
