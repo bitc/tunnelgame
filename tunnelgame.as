@@ -39,6 +39,8 @@ package
             stage.quality = StageQuality.LOW;
             stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.showDefaultContextMenu = false;
+            mouseEnabled = false;
+            mouseChildren = false;
 
             //var path : Path = Path.createRandomPath(16, 100);
 
