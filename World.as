@@ -12,7 +12,7 @@ package
             mouseChildren = false;
 
             tunnel = new Tunnel();
-            ship = new Ship(tunnel);
+            ship = new Ship(this);
 
             var startingPos : Number = 1;
             var startPoint : Point = tunnel.getPos(startingPos);
@@ -99,8 +99,8 @@ package
                 tunnel.drawQuads(tunnelShape.graphics);
             }
 
-            x = (VIEWPORT_WIDTH/2) - pos.x;
-            y = (VIEWPORT_HEIGHT/2) - pos.y;
+            x = (VIEWPORT_WIDTH/2) - pos.x + (Math.random()-0.5) * cameraShake * 2;
+            y = (VIEWPORT_HEIGHT/2) - pos.y + (Math.random()-0.5) * cameraShake * 2;
         }
     }
 }

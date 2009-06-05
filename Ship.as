@@ -5,7 +5,7 @@ package
 
     public class Ship extends Sprite
     {
-        public function Ship(tunnel_ : Tunnel)
+        public function Ship(world_ : World)
         {
             mouseEnabled = false;
             mouseChildren = false;
@@ -20,7 +20,8 @@ package
             x = 0;
             y = 0;
 
-            tunnel = tunnel_;
+            world = world_;
+            tunnel = world_.tunnel;
 
             velx = 0;
             vely = 0;
@@ -29,6 +30,7 @@ package
         public var velx : Number;
         public var vely : Number;
 
+        private var world : World;
         private var tunnel : Tunnel;
 
         public var tunnelQuad : uint;
@@ -72,6 +74,9 @@ package
 
                 x = ir.intersectionPoint.x;
                 y = ir.intersectionPoint.y;
+
+                var damage : Number = d * vel.length;
+                world.doCameraShake(int(damage));
             }
             else
             {
