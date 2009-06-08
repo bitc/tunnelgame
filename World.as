@@ -14,6 +14,8 @@ package
             tunnel = new Tunnel();
             ship = new Ship(this);
 
+            shipBullets = new Array();
+
             var startingPos : Number = 1;
             var startPoint : Point = tunnel.getPos(startingPos);
             ship.x = startPoint.x;
@@ -45,10 +47,41 @@ package
         public var tunnel : Tunnel;
         public var ship : Ship;
 
+        public var shipBullets : Array;
+
+        public function addShipBullet(bullet : ShipBullet) : void
+        {
+            shipBullets.push(bullet);
+            addChild(bullet);
+        }
+
+        public function removeShipBullet(bullet : ShipBullet) : void
+        {
+            shipBullets.splice(shipBullets.indexOf(bullet), 1);
+            removeChild(bullet);
+        }
+
         public function doCameraShake(numFrames : int) : void
         {
             if (numFrames > cameraShake) // If camera already has a larger shake then don't lower it
                 cameraShake = numFrames;
+        }
+
+        public function pointInViewport(p : Point) : Boolean
+        {
+            const margin : Number = 40;
+
+            var pos : Point = tunnel.getPos(tunnelPos);
+            if(p.x < pos.x - VIEWPORT_WIDTH/2 - margin)
+                return false;
+            if(p.x > pos.x + VIEWPORT_WIDTH/2 + margin)
+                return false;
+            if(p.y < pos.y - VIEWPORT_HEIGHT/2 - margin)
+                return false;
+            if(p.y > pos.y + VIEWPORT_WIDTH/2 + margin)
+                return false;
+
+            return true;
         }
 
         public function tick(controller : Controller) : void
@@ -101,6 +134,13 @@ package
 
             x = (VIEWPORT_WIDTH/2) - pos.x + (Math.random()-0.5) * cameraShake * 2;
             y = (VIEWPORT_HEIGHT/2) - pos.y + (Math.random()-0.5) * cameraShake * 2;
+
+            var i : uint;
+            for(i = 0; i < shipBullets.length; ++i)
+            {
+                var bullet : ShipBullet = shipBullets[i];
+                bullet.tick();
+            }
         }
     }
 }

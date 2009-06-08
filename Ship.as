@@ -20,6 +20,8 @@ package
             x = 0;
             y = 0;
 
+            weaponCharge = 0;
+
             world = world_;
             tunnel = world_.tunnel;
 
@@ -32,6 +34,8 @@ package
 
         private var world : World;
         private var tunnel : Tunnel;
+
+        private var weaponCharge : uint;
 
         public var tunnelQuad : uint;
 
@@ -82,6 +86,23 @@ package
             {
                 x += velx;
                 y += vely;
+            }
+
+            if(weaponCharge > 0)
+                weaponCharge--;
+
+            if(controller.fire && weaponCharge == 0)
+            {
+                const weaponChargeTime : uint = 5; // 10;
+                weaponCharge = weaponChargeTime;
+
+                var bulletSpeed : Number = 10;
+                var shipVel : Point = new Point(velx, vely);
+                var shipDir : Point = new Point(
+                        bulletSpeed * Math.cos(rotation * Math.PI / 180),
+                        bulletSpeed * Math.sin(rotation * Math.PI / 180));
+                var newBullet : ShipBullet = new ShipBullet(world, new Point(x, y), shipDir.add(shipVel));
+                world.addShipBullet(newBullet);
             }
         }
     }
