@@ -86,7 +86,7 @@ package
 
         private function keyDown(event : KeyboardEvent) : void
         {
-            if(event.keyCode == Keyboard.SPACE)
+            if(event.keyCode == 90) // Z
                 controller.fire = true;
             else if(event.keyCode == Keyboard.UP)
                 controller.up = true;
@@ -106,7 +106,7 @@ package
 
         private function keyUp(event : KeyboardEvent) : void
         {
-            if(event.keyCode == Keyboard.SPACE)
+            if(event.keyCode == 90) // Z
                 controller.fire = false;
             else if(event.keyCode == Keyboard.UP)
                 controller.up = false;
