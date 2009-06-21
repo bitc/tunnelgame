@@ -29,6 +29,8 @@ package
             private var blackBars : Shape;
         }
 
+        private var paused : Boolean;
+
         public function tunnelgame()
         {
             stage.quality = StageQuality.LOW;
@@ -49,6 +51,8 @@ package
             stage.addEventListener(Event.ENTER_FRAME, tick);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
             stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
+            stage.addEventListener(Event.ACTIVATE, activate);
+            stage.addEventListener(Event.DEACTIVATE, deactivate);
 
             controller = new Controller();
 
@@ -66,10 +70,15 @@ package
                 addChild(blackBars);
                 blackBars.visible = false;
             }
+
+            paused = false;
         }
 
         private function tick(event : Event) : void
         {
+            if(paused)
+                return;
+
             world.tick(controller);
         }
 
@@ -107,6 +116,18 @@ package
                 controller.left = false;
             else if(event.keyCode == Keyboard.RIGHT)
                 controller.right = false;
+        }
+
+        private function activate(event : Event) : void
+        {
+            trace("ACTIVATE");
+            paused = false;
+        }
+
+        private function deactivate(event : Event) : void
+        {
+            trace("DEACTIVATE");
+            paused = true;
         }
     }
 }
