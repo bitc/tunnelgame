@@ -101,7 +101,7 @@ package
                 var shipDir : Point = new Point(
                         bulletSpeed * Math.cos(rotation * Math.PI / 180),
                         bulletSpeed * Math.sin(rotation * Math.PI / 180));
-                var newBullet : ShipBullet = new ShipBullet(world, new Point(x, y), shipDir.add(shipVel));
+                var newBullet : ShipBullet = new ShipBullet(world, new Point(x, y), shipDir.add(shipVel), tunnelQuad);
                 world.addShipBullet(newBullet);
             }
         }
