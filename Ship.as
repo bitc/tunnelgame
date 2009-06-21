@@ -63,7 +63,6 @@ package
 
             var ir : IntersectionResult = tunnel.calcMovementCollision(new Point(x, y), endPos, tunnelQuad);
 
-            trace(tunnelQuad);
             tunnelQuad = ir.resultingQuad;
             if(ir.intersection)
             {
