@@ -68,7 +68,7 @@ package
                 blackBars.graphics.drawRect(-barSize, 480, barSize*2+480, barSize);
                 blackBars.graphics.endFill();
                 addChild(blackBars);
-                blackBars.visible = false;
+                blackBars.visible = true;
             }
 
             paused = false;
