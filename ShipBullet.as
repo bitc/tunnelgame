@@ -55,7 +55,7 @@ package
             x = endPos.x;
             y = endPos.y;
 
-            if(!world.pointInViewport(endPos))
+            if(!world.pointInViewport(endPos, 20))
             {
                 destroySelf();
             }

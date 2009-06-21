@@ -67,10 +67,8 @@ package
                 cameraShake = numFrames;
         }
 
-        public function pointInViewport(p : Point) : Boolean
+        public function pointInViewport(p : Point, margin : Number) : Boolean
         {
-            const margin : Number = 40;
-
             var pos : Point = tunnel.getPos(tunnelPos);
             if(p.x < pos.x - VIEWPORT_WIDTH/2 - margin)
                 return false;
