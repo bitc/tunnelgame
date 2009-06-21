@@ -2,7 +2,6 @@ package
 {
     import flash.geom.Point;
     import flash.display.Graphics;
-    import flash.display.Bitmap;
 
     public class Tunnel
     {
@@ -31,9 +30,6 @@ package
             {
                 pushRib();
             }
-
-            // TODO delete this (temporary):
-            nebula = new Nebula();
         }
 
         private static function testLineSegmentIntersection(p1 : Point, p2 : Point, p3 : Point, p4 : Point) : Boolean
@@ -251,11 +247,6 @@ package
             return p0.x*p1.x + p0.y*p1.y;
         }
 
-        // TODO delete this (temporary):
-        [Embed(source="nebula.png")]
-        private var Nebula : Class;
-        private var nebula : Bitmap;
-
         private function getFirstRibIndex() : uint
         {
             return pCount * ribsPerSegment;
@@ -334,6 +325,55 @@ package
 
         public function drawQuads(g : Graphics) : void
         {
+            var i : uint;
+            for(i = getFirstRibIndex(); i < getFirstRibIndex() + ribsPerSegment * 2 - 1; ++i)
+            {
+                var r0 : LineSegment = ribGetLineSegment(i);
+                var r1 : LineSegment = ribGetLineSegment(i+1);
+
+                var v0 : Point = r0.p0;
+                var v1 : Point = r0.p1;
+                var v2 : Point = r1.p1;
+                var v3 : Point = r1.p0;
+                g.beginFill(0x221818);
+                g.lineStyle();
+                g.moveTo(v0.x, v0.y);
+                g.lineTo(v1.x, v1.y);
+                g.lineTo(v2.x, v2.y);
+                g.lineTo(v3.x, v3.y);
+                g.endFill();
+            }
+        }
+
+        public function drawLines(g : Graphics) : void
+        {
+            var i : uint;
+            var r0 : LineSegment;
+            var v0 : Point;
+
+            g.lineStyle(16, 0x000000);
+            r0 = ribGetLineSegment(getFirstRibIndex());
+            v0 = r0.p0;
+            g.moveTo(v0.x, v0.y);
+            for(i = getFirstRibIndex()+1; i < getFirstRibIndex() + ribsPerSegment * 2; ++i)
+            {
+                r0 = ribGetLineSegment(i);
+                v0 = r0.p0;
+                g.lineTo(v0.x, v0.y);
+            }
+            r0 = ribGetLineSegment(getFirstRibIndex());
+            v0 = r0.p1;
+            g.moveTo(v0.x, v0.y);
+            for(i = getFirstRibIndex()+1; i < getFirstRibIndex() + ribsPerSegment * 2; ++i)
+            {
+                r0 = ribGetLineSegment(i);
+                v0 = r0.p1;
+                g.lineTo(v0.x, v0.y);
+            }
+        }
+
+        public function drawDebug(g : Graphics) : void
+        {
             g.lineStyle(3, 0x00FFFF);
 
             g.moveTo(0, 0);
@@ -350,69 +390,6 @@ package
             g.drawCircle(p2.x, p2.y, 5);
             g.drawCircle(p3.x, p3.y, 5);
             g.drawCircle(p4.x, p4.y, 5);
-
-            var i : uint;
-            for(i = getFirstRibIndex(); i < getFirstRibIndex() + ribsPerSegment * 2 - 1; ++i)
-            {
-                var r0 : LineSegment = ribGetLineSegment(i);
-                var r1 : LineSegment = ribGetLineSegment(i+1);
-
-                var v0 : Point = r0.p0;
-                var v1 : Point = r0.p1;
-                var v2 : Point = r1.p1;
-                var v3 : Point = r1.p0;
-                //g.beginFill(0x0000FF);
-                //g.beginBitmapFill(nebula.bitmapData);
-                //g.lineStyle();
-                g.lineStyle(1, 0xFFFF00);
-                g.moveTo(v0.x, v0.y);
-                g.lineTo(v1.x, v1.y);
-                g.lineTo(v2.x, v2.y);
-                g.lineTo(v3.x, v3.y);
-                //g.endFill();
-
-                var p0 : Point = getPos(i / ribsPerSegment);
-                var t0 : Point = getTangent(i / ribsPerSegment);
-                t0.normalize(1);
-                g.lineStyle(1, 0x00FF00);
-                g.drawCircle(p0.x, p0.y, 3);
-                g.moveTo(p0.x, p0.y);
-                g.lineTo(p0.x + 10*t0.y, p0.y - 10*t0.x);
-            }
-            return;
-
-            for(i = 0; i < ribsPerSegment * 2 - 1; ++i)
-            {
-                var p0 : Point = getPos(pCount + i / ribsPerSegment);
-                var t0 : Point = getTangent(pCount + i / ribsPerSegment);
-                t0.normalize(1);
-                t0 = new Point(t0.y, -t0.x);
-
-                var p1 : Point = getPos(pCount + (i+1) / ribsPerSegment);
-                var t1 : Point = getTangent(pCount + (i+1) / ribsPerSegment);
-                t1.normalize(1);
-                t1 = new Point(t1.y, -t1.x);
-
-                var v0 : Point = p0.subtract(pointMul(ribs[i].negativeLength, t0));
-                var v1 : Point = p0.add(pointMul(ribs[i].positiveLength, t0));
-                var v2 : Point = p1.add(pointMul(ribs[i+1].positiveLength, t1));
-                var v3 : Point = p1.subtract(pointMul(ribs[i+1].negativeLength, t1));
-
-                //g.beginFill(0x0000FF);
-                //g.beginBitmapFill(nebula.bitmapData);
-                //g.lineStyle();
-                g.lineStyle(1, 0xFFFF00);
-                g.moveTo(v0.x, v0.y);
-                g.lineTo(v1.x, v1.y);
-                g.lineTo(v2.x, v2.y);
-                g.lineTo(v3.x, v3.y);
-                //g.endFill();
-
-                g.lineStyle(1, 0x00FF00);
-                g.drawCircle(p0.x, p0.y, 3);
-                g.moveTo(p0.x, p0.y);
-                g.lineTo(p0.x + 10*t0.y, p0.y - 10*t0.x);
-            }
         }
     }
 }

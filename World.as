@@ -3,6 +3,7 @@ package
     import flash.display.Sprite;
     import flash.display.Shape;
     import flash.geom.Point;
+    import flash.display.Bitmap;
 
     public class World extends Sprite
     {
@@ -27,14 +28,30 @@ package
 
             cameraShake = 0;
 
+            surface = new Surface();
+
+            surfaceShape = new Shape();
+            surfaceShape.graphics.beginFill(0x0000FF);
+            surfaceShape.graphics.beginBitmapFill(surface.bitmapData);
+            surfaceShape.graphics.lineStyle();
+            surfaceShape.graphics.drawRect(-100000, -100000, 200000, 200000);
+            surfaceShape.graphics.endFill();
+
             tunnelShape = new Shape();
+
+            addChild(surfaceShape);
             addChild(tunnelShape);
             addChild(ship);
 
-            tunnel.drawQuads(tunnelShape.graphics);
+            drawTunnel();
         }
 
+        [Embed(source="surface.jpg")]
+        private var Surface : Class;
+        private var surface : Bitmap;
+
         private var tunnelShape : Shape;
+        private var surfaceShape : Shape;
 
         public static const VIEWPORT_WIDTH : int = 480;
         public static const VIEWPORT_HEIGHT : int = 480;
@@ -126,8 +143,7 @@ package
             if(Point.distance(pos, tunnel.getP3()) <= 450)
             {
                 tunnel.nextSegment();
-                tunnelShape.graphics.clear();
-                tunnel.drawQuads(tunnelShape.graphics);
+                drawTunnel();
             }
 
             x = (VIEWPORT_WIDTH/2) - pos.x + (Math.random()-0.5) * cameraShake * 2;
@@ -139,6 +155,13 @@ package
                 var bullet : ShipBullet = shipBullets[i];
                 bullet.tick();
             }
+        }
+
+        private function drawTunnel() : void
+        {
+            tunnelShape.graphics.clear();
+            tunnel.drawLines(tunnelShape.graphics);
+            tunnel.drawQuads(tunnelShape.graphics);
         }
     }
 }
