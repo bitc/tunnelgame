@@ -282,7 +282,6 @@ package
             var result : IntersectionResult = new IntersectionResult();
             var p : Point;
 
-            trace("----- T0 -------");
             do
             {
                 var rib0 : LineSegment = ribGetLineSegment(currentQuad);
@@ -297,7 +296,6 @@ package
 
                 if(!isNaN(u0) && (isNaN(u2) || u0 <= u2) && (isNaN(u3) || u0 <= u3))
                 {
-                    trace("% " + u0 + ", " + u1 + ", " + u2 + ", " + u3);
                     result.resultingQuad = currentQuad;
                     result.intersection = true;
                     result.intersectionPoint = currentPos.add(pointMul(u0, traj));
@@ -317,21 +315,18 @@ package
 
                 if(!isNaN(u2))
                 {
-                    trace("----- T- -------");
                     currentQuad -= 1;
                     currentPos = currentPos.add(pointMul(u2, traj));
                     restart = true;
                 }
                 if(!isNaN(u3))
                 {
-                    trace("----- T+ -------");
                     currentQuad += 1;
                     currentPos = currentPos.add(pointMul(u3, traj));
                     restart = true;
                 }
             } while(restart);
 
-            trace("----- T1 -------");
             result.resultingQuad = currentQuad;
             result.intersection = false;
             return result;
