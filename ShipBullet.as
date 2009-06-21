@@ -47,7 +47,18 @@ package
             if(ir.intersection)
             {
                 // Bullet collided with tunnel wall
-                // TODO spawn debris particles
+                var angle : Number = Math.atan2(ir.normal.y, ir.normal.x);
+                var i : int;
+                for(i = 0; i < 30; i++)
+                {
+                    var speed : Number = Math.random() * 5;
+                    var rotationOffset : Number = Math.random() * 2 - 1;
+                    var dir : Point = new Point(
+                            speed * Math.cos(angle + rotationOffset),
+                            speed * Math.sin(angle + rotationOffset));
+                    var debrisParticle : Particle = new Particle(world, ir.intersectionPoint, dir, 0xAA8822);
+                    world.addParticle(debrisParticle);
+                }
                 destroySelf();
                 return;
             }

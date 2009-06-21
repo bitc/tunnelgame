@@ -48,6 +48,21 @@ package
             {
                 velx += acceleration * Math.cos(rotation * Math.PI / 180);
                 vely += acceleration * Math.sin(rotation * Math.PI / 180);
+
+                var i : int;
+                for(i=0; i<15; i++)
+                {
+                    var speed : Number = Math.random() * 10;
+                    var rotationOffset : Number = Math.random() * 40 - 20;
+                    var dir : Point = new Point(
+                            -speed * Math.cos((rotation + rotationOffset) * Math.PI / 180),
+                            -speed * Math.sin((rotation + rotationOffset) * Math.PI / 180));
+                    var thrustParticle : Particle = new Particle(world, new Point(
+                                x - 20 * Math.cos(rotation * Math.PI / 180),
+                                y - 20 * Math.sin(rotation * Math.PI / 180)),
+                            dir.add(new Point(velx, vely)), 0x3333FF);
+                    world.addParticle(thrustParticle);
+                }
             }
             if(controller.down)
             {

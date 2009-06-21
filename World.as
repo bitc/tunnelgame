@@ -16,6 +16,7 @@ package
             ship = new Ship(this);
 
             shipBullets = new Array();
+            particles = new Array();
 
             var startingPos : Number = 1;
             var startPoint : Point = tunnel.getPos(startingPos);
@@ -65,6 +66,7 @@ package
         public var ship : Ship;
 
         public var shipBullets : Array;
+        public var particles : Array;
 
         public function addShipBullet(bullet : ShipBullet) : void
         {
@@ -76,6 +78,18 @@ package
         {
             shipBullets.splice(shipBullets.indexOf(bullet), 1);
             removeChild(bullet);
+        }
+
+        public function addParticle(particle : Particle) : void
+        {
+            particles.push(particle);
+            addChild(particle);
+        }
+
+        public function removeParticle(particle : Particle) : void
+        {
+            particles.splice(particles.indexOf(particle), 1);
+            removeChild(particle);
         }
 
         public function doCameraShake(numFrames : int) : void
@@ -154,6 +168,11 @@ package
             {
                 var bullet : ShipBullet = shipBullets[i];
                 bullet.tick();
+            }
+            for(i = 0; i < particles.length; ++i)
+            {
+                var particle : Particle = particles[i];
+                particle.tick();
             }
         }
 
