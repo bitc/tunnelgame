@@ -179,20 +179,24 @@ package
             x = (VIEWPORT_WIDTH/2) - pos.x + (Math.random()-0.5) * cameraShake * 2;
             y = (VIEWPORT_HEIGHT/2) - pos.y + (Math.random()-0.5) * cameraShake * 2;
 
+            // Traverse over copies of the arrays because they might be modified during traversal
             var i : uint;
-            for(i = 0; i < shipBullets.length; ++i)
+            var shipBulletsCopy : Array = shipBullets.slice();
+            for(i = 0; i < shipBulletsCopy.length; ++i)
             {
-                var bullet : ShipBullet = shipBullets[i];
+                var bullet : ShipBullet = shipBulletsCopy[i];
                 bullet.tick();
             }
-            for(i = 0; i < particles.length; ++i)
+            var particlesCopy : Array = particles.slice();
+            for(i = 0; i < particlesCopy.length; ++i)
             {
-                var particle : Particle = particles[i];
+                var particle : Particle = particlesCopy[i];
                 particle.tick();
             }
-            for(i = 0; i < enemies.length; ++i)
+            var enemiesCopy : Array = enemies.slice();
+            for(i = 0; i < enemiesCopy.length; ++i)
             {
-                var enemy : Enemy = enemies[i];
+                var enemy : Enemy = enemiesCopy[i];
                 enemy.tick();
             }
         }
