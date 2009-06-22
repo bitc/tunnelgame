@@ -95,6 +95,8 @@ package
 
                 var damage : Number = d * vel.length;
                 world.doCameraShake(int(damage));
+
+                // TODO decrease health
             }
             else
             {
