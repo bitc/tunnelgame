@@ -241,8 +241,8 @@ package
             {
                 for(j = 0; j < enemiesCopy.length; j++)
                 {
-                    // Verify that the current ShipBullet and Enemy have not been destroyed
-                    if(shipBullets.indexOf(shipBulletsCopy[i]) >= 0 && enemies.indexOf(enemiesCopy[j]) >= 0)
+                    // Verify that the current Enemy has not been destroyed
+                    if(enemies.indexOf(enemiesCopy[j]) >= 0)
                     {
                         var bullet : ShipBullet = shipBulletsCopy[i];
                         var enemy : Enemy = enemiesCopy[j];
