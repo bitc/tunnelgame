@@ -17,6 +17,7 @@ package
 
             shipBullets = new Array();
             particles = new Array();
+            enemies = new Array();
 
             var startingPos : Number = 1;
             var startPoint : Point = tunnel.getPos(startingPos);
@@ -67,6 +68,7 @@ package
 
         public var shipBullets : Array;
         public var particles : Array;
+        public var enemies : Array;
 
         public function addShipBullet(bullet : ShipBullet) : void
         {
@@ -90,6 +92,18 @@ package
         {
             particles.splice(particles.indexOf(particle), 1);
             removeChild(particle);
+        }
+
+        public function addEnemy(enemy : Enemy) : void
+        {
+            enemies.push(enemy);
+            addChild(enemy);
+        }
+
+        public function removeEnemy(enemy : Enemy) : void
+        {
+            enemies.splice(enemies.indexOf(enemy), 1);
+            removeChild(enemy);
         }
 
         public function doCameraShake(numFrames : int) : void
@@ -158,6 +172,8 @@ package
             {
                 tunnel.nextSegment();
                 drawTunnel();
+
+                spawnEnemies();
             }
 
             x = (VIEWPORT_WIDTH/2) - pos.x + (Math.random()-0.5) * cameraShake * 2;
@@ -174,6 +190,11 @@ package
                 var particle : Particle = particles[i];
                 particle.tick();
             }
+            for(i = 0; i < enemies.length; ++i)
+            {
+                var enemy : Enemy = enemies[i];
+                enemy.tick();
+            }
         }
 
         private function drawTunnel() : void
@@ -181,6 +202,21 @@ package
             tunnelShape.graphics.clear();
             tunnel.drawLines(tunnelShape.graphics);
             tunnel.drawQuads(tunnelShape.graphics);
+        }
+
+        private function spawnEnemies() : void
+        {
+            var i : int;
+            var head : Number = tunnel.getHead();
+            for(i = 0; i < 8; i++)
+            {
+                if(Math.random() <= 0.2)
+                {
+                    var pos : Point = tunnel.getPos(head + 1 + (Number(i)/8));
+                    var newEnemy : Enemy = new Enemy(this, pos);
+                    addEnemy(newEnemy);
+                }
+            }
         }
     }
 }

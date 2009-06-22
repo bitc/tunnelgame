@@ -4,6 +4,7 @@ DEBUGGING = true
 
 tunnelgame.swf : \
 	Controller.as \
+	Enemy.as \
 	IntersectionResult.as \
 	Particle.as \
 	Ship.as \
