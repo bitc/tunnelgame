@@ -164,6 +164,11 @@ package
             }
         }
 
+        public function getHead() : Number
+        {
+            return pCount;
+        }
+
         public function getPos(d : Number) : Point
         {
             if(d < pCount)
