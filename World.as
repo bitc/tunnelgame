@@ -268,7 +268,7 @@ package
                 if(Math.random() <= 0.2)
                 {
                     var pos : Point = tunnel.getPos(head + 1 + (Number(i)/8));
-                    var newEnemy : Enemy = new Enemy(this, pos);
+                    var newEnemy : Enemy = new Enemy(this, pos, head*8 + 8 + i);
                     addEnemy(newEnemy);
                 }
             }

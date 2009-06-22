@@ -6,7 +6,7 @@ package
 
     public class Enemy extends Sprite
     {
-        public function Enemy(world_ : World, pos_ : Point)
+        public function Enemy(world_ : World, pos_ : Point, tunnelQuad_ : uint)
         {
             mouseEnabled = false;
             mouseChildren = false;
@@ -18,10 +18,17 @@ package
 
             vel = new Point(0, 0);
 
+            tunnelQuad = tunnelQuad_;
+
             graphics.lineStyle();
             graphics.beginFill(0x888888);
             graphics.drawCircle(0, 0, RADIUS);
             graphics.endFill();
+
+            turretShape = new Shape();
+            turretShape.graphics.lineStyle(2, 0xFFFFFF);
+            turretShape.graphics.drawCircle(RADIUS*3/4, 0, RADIUS/4);
+            addChild(turretShape);
 
             inViewport = false;
 
@@ -63,6 +70,26 @@ package
                 if(!world.pointInViewport(new Point(x, y), RADIUS))
                 {
                     destroySelf();
+                    return;
+                }
+
+                var myPos : Point = new Point(x, y);
+                var shipPos : Point = new Point(world.ship.x, world.ship.y);
+                var shipDir : Point = shipPos.subtract(myPos);
+
+                var turretAngle : Number = Math.atan2(shipDir.y, shipDir.x);
+
+                turretShape.rotation = turretAngle * 180/Math.PI;
+
+                // Shoot the ship
+                if(Math.random() <= 0.05)
+                {
+                    const bulletSpeed : Number = 10;
+
+                    shipDir.normalize(bulletSpeed);
+
+                    var bullet : EnemyBullet = new EnemyBullet(world, myPos, shipDir, tunnelQuad);
+                    world.addEnemyBullet(bullet);
                 }
             }
         }
@@ -107,7 +134,11 @@ package
 
         public var vel : Point;
 
+        public var tunnelQuad : uint;
+
         private var inViewport : Boolean;
+
+        private var turretShape : Shape;
 
         CONFIG::debugging
         {
