@@ -76,6 +76,33 @@ package
             }
         }
 
+        public function performBulletCollision(bullet : ShipBullet) : void
+        {
+            var distanceSquared : Number = (x - bullet.x)*(x - bullet.x) + (y - bullet.y)*(y - bullet.y);
+            if(distanceSquared > RADIUS*RADIUS)
+            {
+                // No collision
+                return;
+            }
+
+            bullet.destroySelf();
+            destroySelf();
+
+            // TODO add to the player's score
+
+            var i : int;
+            for(i = 0; i < 100; i++)
+            {
+                var angle : Number = Math.random() * 2 * Math.PI;
+                var speed : Number = Math.random() * 5;
+                var dir : Point = new Point(
+                        speed * Math.cos(angle),
+                        speed * Math.sin(angle));
+                var debrisParticle : Particle = new Particle(world, new Point(x, y), dir, 0xAA8822);
+                world.addParticle(debrisParticle);
+            }
+        }
+
         private var world : World;
 
         public var vel : Point;

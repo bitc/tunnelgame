@@ -180,6 +180,7 @@ package
             y = (VIEWPORT_HEIGHT/2) - pos.y + (Math.random()-0.5) * cameraShake * 2;
 
             tickEntities();
+            checkCollisions();
         }
 
         private function tickEntities() : void
@@ -206,6 +207,29 @@ package
             {
                 var enemy : Enemy = enemiesCopy[i];
                 enemy.tick();
+            }
+        }
+
+        private function checkCollisions() : void
+        {
+            // Traverse over copies of the arrays because they might be modified during traversal
+            var i : uint;
+            var j : uint;
+
+            var shipBulletsCopy : Array = shipBullets.slice();
+            var enemiesCopy : Array = enemies.slice();
+            for(i = 0; i < shipBulletsCopy.length; i++)
+            {
+                for(j = 0; j < enemiesCopy.length; j++)
+                {
+                    // Verify that the current ShipBullet and Enemy have not been destroyed
+                    if(shipBullets.indexOf(shipBulletsCopy[i]) >= 0 && enemies.indexOf(enemiesCopy[j]) >= 0)
+                    {
+                        var bullet : ShipBullet = shipBulletsCopy[i];
+                        var enemy : Enemy = enemiesCopy[j];
+                        enemy.performBulletCollision(bullet);
+                    }
+                }
             }
         }
 

@@ -69,7 +69,7 @@ package
             }
         }
 
-        private function destroySelf() : void
+        public function destroySelf() : void
         {
             world.removeShipBullet(this);
             CONFIG::debugging
