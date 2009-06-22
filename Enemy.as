@@ -31,7 +31,7 @@ package
             }
         }
 
-        private static const RADIUS : Number = 30;
+        private static const RADIUS : Number = 20;
 
         public function tick() : void
         {
