@@ -3,6 +3,7 @@ all : tunnelgame.swf
 DEBUGGING = true
 
 tunnelgame.swf : \
+	Bullet.as \
 	Controller.as \
 	Enemy.as \
 	IntersectionResult.as \
