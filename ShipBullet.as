@@ -20,7 +20,7 @@ package
 
             tunnelQuad = tunnelQuad_;
 
-            graphics.lineStyle(1, 0xFF0000);
+            graphics.lineStyle(1, 0xFFFF00);
             graphics.drawCircle(0, 0, 5);
 
             CONFIG::debugging
