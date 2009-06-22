@@ -6,6 +6,7 @@ tunnelgame.swf : \
 	Bullet.as \
 	Controller.as \
 	Enemy.as \
+	EnemyBullet.as \
 	IntersectionResult.as \
 	Particle.as \
 	Ship.as \

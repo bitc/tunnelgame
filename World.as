@@ -16,6 +16,7 @@ package
             ship = new Ship(this);
 
             shipBullets = new Array();
+            enemyBullets = new Array();
             particles = new Array();
             enemies = new Array();
 
@@ -67,6 +68,7 @@ package
         public var ship : Ship;
 
         public var shipBullets : Array;
+        public var enemyBullets : Array;
         public var particles : Array;
         public var enemies : Array;
 
@@ -79,6 +81,17 @@ package
         public function removeShipBullet(bullet : ShipBullet) : void
         {
             shipBullets.splice(shipBullets.indexOf(bullet), 1);
+            removeChild(bullet);
+        }
+        public function addEnemyBullet(bullet : EnemyBullet) : void
+        {
+            enemyBullets.push(bullet);
+            addChild(bullet);
+        }
+
+        public function removeEnemyBullet(bullet : EnemyBullet) : void
+        {
+            enemyBullets.splice(enemyBullets.indexOf(bullet), 1);
             removeChild(bullet);
         }
 
@@ -191,8 +204,14 @@ package
             var shipBulletsCopy : Array = shipBullets.slice();
             for(i = 0; i < shipBulletsCopy.length; ++i)
             {
-                var bullet : ShipBullet = shipBulletsCopy[i];
-                bullet.tick();
+                var shipBullet : ShipBullet = shipBulletsCopy[i];
+                shipBullet.tick();
+            }
+            var enemyBulletsCopy : Array = enemyBullets.slice();
+            for(i = 0; i < enemyBulletsCopy.length; ++i)
+            {
+                var enemyBullet : EnemyBullet = enemyBulletsCopy[i];
+                enemyBullet.tick();
             }
 
             var particlesCopy : Array = particles.slice();
