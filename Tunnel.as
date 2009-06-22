@@ -335,9 +335,9 @@ package
                 var v1 : Point = r0.p1;
                 var v2 : Point = r1.p1;
                 var v3 : Point = r1.p0;
+                g.moveTo(v0.x, v0.y);
                 g.beginFill(0x221818);
                 g.lineStyle();
-                g.moveTo(v0.x, v0.y);
                 g.lineTo(v1.x, v1.y);
                 g.lineTo(v2.x, v2.y);
                 g.lineTo(v3.x, v3.y);
