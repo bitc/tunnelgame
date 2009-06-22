@@ -119,6 +119,22 @@ package
                 world.addShipBullet(newBullet);
             }
         }
+
+        public function performBulletCollision(bullet : EnemyBullet) : void
+        {
+            var distanceSquared : Number = (x - bullet.x)*(x - bullet.x) + (y - bullet.y)*(y - bullet.y);
+            const radius : Number = 10;
+            if(distanceSquared > radius*radius)
+            {
+                // No collision
+                return;
+            }
+
+            bullet.destroySelf();
+            world.doCameraShake(10);
+
+            // TODO decrease health
+        }
     }
 }
 

@@ -244,11 +244,18 @@ package
                     // Verify that the current Enemy has not been destroyed
                     if(enemies.indexOf(enemiesCopy[j]) >= 0)
                     {
-                        var bullet : ShipBullet = shipBulletsCopy[i];
+                        var shipBullet : ShipBullet = shipBulletsCopy[i];
                         var enemy : Enemy = enemiesCopy[j];
-                        enemy.performBulletCollision(bullet);
+                        enemy.performBulletCollision(shipBullet);
                     }
                 }
+            }
+
+            var enemyBulletsCopy : Array = enemyBullets.slice();
+            for(i = 0; i < enemyBulletsCopy.length; i++)
+            {
+                var enemyBullet : EnemyBullet = enemyBulletsCopy[i];
+                ship.performBulletCollision(enemyBullet);
             }
         }
 
