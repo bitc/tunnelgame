@@ -82,13 +82,15 @@ package
                 turretShape.rotation = turretAngle * 180/Math.PI;
 
                 // Shoot the ship
-                if(Math.random() <= 0.05)
+                if(Math.random() <= 0.06)
                 {
                     const bulletSpeed : Number = 10;
 
-                    shipDir.normalize(bulletSpeed);
+                    var bulletAngle : Number = turretAngle + Math.random()*0.3 - 0.15;
 
-                    var bullet : EnemyBullet = new EnemyBullet(world, myPos, shipDir, tunnelQuad);
+                    var bulletTraj : Point = Point.polar(bulletSpeed, bulletAngle);
+
+                    var bullet : EnemyBullet = new EnemyBullet(world, myPos, bulletTraj, tunnelQuad);
                     world.addEnemyBullet(bullet);
                 }
             }
