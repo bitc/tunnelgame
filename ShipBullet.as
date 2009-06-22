@@ -20,11 +20,8 @@ package
 
             tunnelQuad = tunnelQuad_;
 
-            var shape : Shape = new Shape();
-            shape.graphics.lineStyle(1, 0xFF0000);
-            shape.graphics.drawCircle(0, 0, 5);
-
-            addChild(shape);
+            graphics.lineStyle(1, 0xFF0000);
+            graphics.drawCircle(0, 0, 5);
 
             CONFIG::debugging
             {
