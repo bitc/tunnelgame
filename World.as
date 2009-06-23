@@ -181,7 +181,7 @@ package
 
             ship.tick(controller);
 
-            if(Point.distance(pos, tunnel.getP3()) <= 450)
+            if(Point.distance(pos, tunnel.getP3()) <= 480)
             {
                 tunnel.nextSegment();
                 drawTunnel();

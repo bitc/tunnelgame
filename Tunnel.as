@@ -15,7 +15,7 @@ package
             maxRibLength = 200;
             //maxRibLength = 400;
 
-            var segmentLength : Number = 800;
+            var segmentLength : Number = 900;
             tunnelBuilder = new TunnelBuilder(segmentLength);
 
             p0 = tunnelBuilder.nextPoint();
