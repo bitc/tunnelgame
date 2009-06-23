@@ -109,7 +109,7 @@ package
 
             if(controller.fire && weaponCharge == 0)
             {
-                const weaponChargeTime : uint = 5; // 10;
+                const weaponChargeTime : uint = 10;
                 weaponCharge = weaponChargeTime;
 
                 var bulletSpeed : Number = 10;
