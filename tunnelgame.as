@@ -41,10 +41,6 @@ package
 
             //var path : Path = Path.createRandomPath(16, 100);
 
-            graphics.lineStyle(1, 0x000000);
-            graphics.drawRect(-1, -1, 481, 481);
-            graphics.drawRect(-5, -5, 489, 489);
-
             world = new World();
             addChild(world);
 
@@ -58,6 +54,12 @@ package
 
             CONFIG::debugging
             {
+                var squaresOverlay : Shape = new Shape();
+                squaresOverlay.graphics.lineStyle(1, 0x000000);
+                squaresOverlay.graphics.drawRect(-1, -1, 481, 481);
+                squaresOverlay.graphics.drawRect(-5, -5, 489, 489);
+                addChild(squaresOverlay);
+
                 blackBars = new Shape();
                 blackBars.graphics.lineStyle();
                 var barSize : int = 300;
