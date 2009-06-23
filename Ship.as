@@ -137,6 +137,34 @@ package
 
             // TODO decrease health
         }
+
+        public function performEnemyCollision(enemy : Enemy) : void
+        {
+            var distanceSquared : Number = (x - enemy.x)*(x - enemy.x) + (y - enemy.y)*(y - enemy.y);
+            var totalRadius : Number = 10 + enemy.getRadius();
+            if(distanceSquared > totalRadius*totalRadius)
+            {
+                // No collision
+                return;
+            }
+
+            world.doCameraShake(10);
+
+            enemy.explodeAndDestroy();
+
+            var normal : Point = new Point(x - enemy.x, y - enemy.y);
+
+            var vel : Point = new Point(velx, vely);
+            var d : Number = Tunnel.pointDot(vel, new Point(-normal.x, -normal.y)) / (vel.length*normal.length);
+            normal.normalize(d * vel.length * (1 + 0.7));
+
+            vel = vel.add(normal)
+            velx = vel.x;
+            vely = vel.y;
+
+
+            // TODO decrease health
+        }
     }
 }
 

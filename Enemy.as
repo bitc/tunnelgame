@@ -40,6 +40,11 @@ package
 
         private static const RADIUS : Number = 20;
 
+        public function getRadius() : Number
+        {
+            return RADIUS;
+        }
+
         public function tick() : void
         {
             CONFIG::debugging
@@ -114,10 +119,15 @@ package
                 return;
             }
 
-            bullet.destroySelf();
-            destroySelf();
-
             // TODO add to the player's score
+
+            bullet.destroySelf();
+            explodeAndDestroy();
+        }
+
+        public function explodeAndDestroy() : void
+        {
+            destroySelf();
 
             var i : int;
             for(i = 0; i < 100; i++)
