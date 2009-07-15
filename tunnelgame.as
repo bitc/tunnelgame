@@ -23,6 +23,7 @@ package
         private var circle : Shape;
 
         private var world : World;
+        private var hud : HUD;
 
         CONFIG::debugging
         {
@@ -43,6 +44,9 @@ package
 
             world = new World();
             addChild(world);
+
+            hud = new HUD(world);
+            addChild(hud);
 
             stage.addEventListener(Event.ENTER_FRAME, tick);
             stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
@@ -82,6 +86,7 @@ package
                 return;
 
             world.tick(controller);
+            hud.tick();
         }
 
         private var controller : Controller;
