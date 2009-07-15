@@ -15,7 +15,7 @@ package
             ship = world.ship;
 
             healthBarShape = new Shape();
-            setHealth(400);
+            setHealth(ship.getHealth());
             addChild(healthBarShape);
         }
 
@@ -26,6 +26,7 @@ package
 
         public function tick() : void
         {
+            setHealth(ship.getHealth());
         }
 
         private function setHealth(amount : int) : void

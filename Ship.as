@@ -20,6 +20,8 @@ package
             x = 0;
             y = 0;
 
+            health = 400;
+
             weaponCharge = 0;
 
             world = world_;
@@ -35,9 +37,25 @@ package
         private var world : World;
         private var tunnel : Tunnel;
 
+        private var health : int;
+
         private var weaponCharge : uint;
 
         public var tunnelQuad : uint;
+
+        public function getHealth() : int
+        {
+            return health;
+        }
+
+        private function reduceHealth(amount : int) : void
+        {
+            health -= amount;
+            if(health <= 0)
+            {
+                // TODO death
+            }
+        }
 
         public function tick(controller : Controller) : void
         {
@@ -96,7 +114,7 @@ package
                 var damage : Number = d * vel.length;
                 world.doCameraShake(int(damage));
 
-                // TODO decrease health
+                reduceHealth(int(damage));
             }
             else
             {
@@ -135,7 +153,7 @@ package
             bullet.destroySelf();
             world.doCameraShake(10);
 
-            // TODO decrease health
+            reduceHealth(10);
         }
 
         public function performEnemyCollision(enemy : Enemy) : void
@@ -163,7 +181,7 @@ package
             vely = vel.y;
 
 
-            // TODO decrease health
+            reduceHealth(20);
         }
     }
 }
