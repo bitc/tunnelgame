@@ -42,7 +42,9 @@ package
 
             //var path : Path = Path.createRandomPath(16, 100);
 
-            world = new World();
+            var scoreKeeper : ScoreKeeper = new ScoreKeeper();
+
+            world = new World(scoreKeeper);
             addChild(world);
 
             hud = new HUD(world);

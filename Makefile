@@ -10,6 +10,7 @@ tunnelgame.swf : \
 	HUD.as \
 	IntersectionResult.as \
 	Particle.as \
+	ScoreKeeper.as \
 	Ship.as \
 	ShipBullet.as \
 	Tunnel.as \

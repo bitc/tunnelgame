@@ -7,13 +7,15 @@ package
 
     public class World extends Sprite
     {
-        public function World()
+        public function World(scoreKeeper : ScoreKeeper)
         {
             mouseEnabled = false;
             mouseChildren = false;
 
             tunnel = new Tunnel();
             ship = new Ship(this);
+
+            this.scoreKeeper = scoreKeeper;
 
             shipBullets = new Array();
             enemyBullets = new Array();
@@ -66,6 +68,8 @@ package
 
         public var tunnel : Tunnel;
         public var ship : Ship;
+
+        public var scoreKeeper : ScoreKeeper;
 
         public var shipBullets : Array;
         public var enemyBullets : Array;

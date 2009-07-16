@@ -56,7 +56,7 @@ package
         {
             setHealth(ship.getHealth());
 
-            setScore(0);
+            setScore(world.scoreKeeper.getScore());
         }
 
         private function setHealth(amount : int) : void

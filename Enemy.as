@@ -119,8 +119,6 @@ package
                 return;
             }
 
-            // TODO add to the player's score
-
             bullet.destroySelf();
             explodeAndDestroy();
         }
@@ -128,6 +126,8 @@ package
         public function explodeAndDestroy() : void
         {
             destroySelf();
+
+            world.scoreKeeper.addScore(100);
 
             var i : int;
             for(i = 0; i < 100; i++)
