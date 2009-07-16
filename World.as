@@ -146,12 +146,6 @@ package
 
         public function tick(controller : Controller) : void
         {
-            if(cameraShake > 0)
-            {
-                cameraShake--;
-                // TODO add random offset to camera x & y
-            }
-
             var oldPos : Point = tunnel.getPos(tunnelPos);
             var advancementSpeed : Number = 0.005;
             tunnelPos += advancementSpeed;
@@ -191,6 +185,11 @@ package
                 drawTunnel();
 
                 spawnEnemies();
+            }
+
+            if(cameraShake > 0)
+            {
+                cameraShake--;
             }
 
             x = (VIEWPORT_WIDTH/2) - pos.x + (Math.random()-0.5) * cameraShake * 2;
