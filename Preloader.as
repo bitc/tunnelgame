@@ -18,10 +18,7 @@ package
             stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.showDefaultContextMenu = false;
 
-            progressBar = new Shape();
-            drawProgress();
-            addChild(progressBar);
-
+            progressBar = null;
             addEventListener(Event.ENTER_FRAME, onEnterFrame);
         }
 
@@ -33,7 +30,16 @@ package
                 Number(root.loaderInfo.bytesLoaded) /
                 Number(root.loaderInfo.bytesTotal);
 
-            progressBar.graphics.clear();
+            if(!progressBar)
+            {
+                progressBar = new Shape();
+                addChild(progressBar);
+            }
+            else
+            {
+                progressBar.graphics.clear();
+            }
+
             progressBar.graphics.lineStyle(4, 0x008800);
             progressBar.graphics.drawRect(36, 226, 408, 28);
             progressBar.graphics.lineStyle();
@@ -46,11 +52,14 @@ package
         {
             if(framesLoaded == totalFrames)
             {
-                removeChild(progressBar);
+                if(progressBar)
+                {
+                    removeChild(progressBar);
 
-                // So that the shape can get garbage collected, since this
-                // Preloader instance lives on forever:
-                progressBar = null;
+                    // So that the shape can get garbage collected, since this
+                    // Preloader instance lives on forever:
+                    progressBar = null;
+                }
 
                 removeEventListener(Event.ENTER_FRAME, onEnterFrame);
 
