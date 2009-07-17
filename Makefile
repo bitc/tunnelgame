@@ -11,6 +11,7 @@ tunnelgame.swf : \
 	HUD.as \
 	IntersectionResult.as \
 	Particle.as \
+	Preloader.as \
 	ScoreKeeper.as \
 	Ship.as \
 	ShipBullet.as \

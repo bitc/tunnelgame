@@ -17,6 +17,9 @@ package
 
     import Tunnel;
 
+    [SWF(width="480", height="480", backgroundColor="#000000")]
+    [Frame(factoryClass="Preloader")]
+
     public class tunnelgame extends Sprite
     {
         //private var slidingPath : SlidingPath;
@@ -33,6 +36,15 @@ package
         private var paused : Boolean;
 
         public function tunnelgame()
+        {
+            // the start() function acts as a constructor. Can't do any
+            // initialization in the real constructor because the Preloader
+            // requires that it instantiate this class and and inserts it
+            // into the stage, so here in the constructor we don't yet have
+            // access to the stage.
+        }
+
+        public function start() : void
         {
             stage.quality = StageQuality.LOW;
             stage.scaleMode = StageScaleMode.NO_SCALE;
