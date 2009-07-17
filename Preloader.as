@@ -38,7 +38,7 @@ package
             progressBar.graphics.drawRect(36, 226, 408, 28);
             progressBar.graphics.lineStyle();
             progressBar.graphics.beginFill(0x00CC00);
-            progressBar.graphics.drawRect(40, 230, percentage * 400, 20);
+            progressBar.graphics.drawRect(40, 230, (percentage*percentage) * 400, 20);
             progressBar.graphics.endFill();
         }
 
