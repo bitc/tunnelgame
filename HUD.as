@@ -23,8 +23,7 @@ package
             addChild(healthBarShape);
 
             scoreLabelFormat = new TextFormat();
-            var rexliaFontInstance : Font = new RexliaFont();
-            scoreLabelFormat.font = rexliaFontInstance.fontName;
+            scoreLabelFormat.font = FontCollection.Rexlia().fontName;
             scoreLabelFormat.color = 0xFFFFFF;
             scoreLabelFormat.size = 16;
 
@@ -40,9 +39,6 @@ package
 
             addChild(scoreLabel);
         }
-
-        [Embed(source="rexlia.ttf", fontName="Rexlia")]
-        private var RexliaFont : Class;
 
         private var scoreLabel : TextField;
         private var scoreLabelFormat : TextFormat;
