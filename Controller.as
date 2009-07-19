@@ -4,6 +4,11 @@ package
     {
         public function Controller()
         {
+            reset();
+        }
+
+        public function reset() : void
+        {
             up = down = left = right = fire = false;
         }
 
