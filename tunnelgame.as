@@ -204,7 +204,7 @@ package
 
         private function keyDown(event : KeyboardEvent) : void
         {
-            if(event.keyCode == 90) // Z
+            if(event.keyCode == 90 || event.keyCode == 88) // Z || X
                 controller.fire = true;
             else if(event.keyCode == Keyboard.UP)
                 controller.up = true;
@@ -238,7 +238,7 @@ package
 
         private function keyUp(event : KeyboardEvent) : void
         {
-            if(event.keyCode == 90) // Z
+            if(event.keyCode == 90 || event.keyCode == 88) // Z || X
                 controller.fire = false;
             else if(event.keyCode == Keyboard.UP)
                 controller.up = false;
