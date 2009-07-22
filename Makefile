@@ -8,9 +8,13 @@ tunnelgame.swf : \
 	Enemy.as \
 	EnemyBullet.as \
 	FontCollection.as \
+	GUIButton.as \
+	GUIWindow.as \
 	HUD.as \
 	IntersectionResult.as \
+	MainMenu.as \
 	Particle.as \
+	PauseMenu.as \
 	Preloader.as \
 	ScoreKeeper.as \
 	Ship.as \
