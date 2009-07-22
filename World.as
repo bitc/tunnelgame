@@ -49,6 +49,10 @@ package
             addChild(ship);
 
             drawTunnel();
+
+            var pos : Point = tunnel.getPos(tunnelPos);
+            x = (VIEWPORT_WIDTH/2) - pos.x;
+            y = (VIEWPORT_HEIGHT/2) - pos.y;
         }
 
         [Embed(source="surface.jpg")]
