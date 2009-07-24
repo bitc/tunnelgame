@@ -1,0 +1,37 @@
+[X] Add health meter to ship
+
+[X] Add ship death
+
+[ ] Make ship die if it gets stuck in a corner and pushed off-screen
+
+[X] Add score
+
+[ ] Orient ship to be initially aligned with tunnel direction
+
+[ ] Level transitions
+
+[ ] Make simple enemies move around
+
+[ ] Add more enemies:
+     [ ]  (semi)-indestrucatble mines that move back and forth along a rib
+     [ ]  fixed turrets that sit outside the tunnel and shoot at the ship
+
+[ ] Add powerups
+
+[ ] Add black bars that resize automatically to window size for release version of game
+
+[X] Loading screen
+
+[X] Main menu + in game menu
+
+[ ] Add music and sound effects
+
+[ ] Add volume buttons to menus
+
+[ ] Add Achievements
+    [ ] Accuracy (Streak of 50 shots that hit only enemies and no walls)
+    [ ] CRUSHED (Get crushed between a tunnel wall)
+    [ ] X (Streak of 100 kills without taking any damage)
+    [ ] X (Complete any level without taking any damage)
+    [ ] Steering skills (Complete any level without bumping into a wall)
+

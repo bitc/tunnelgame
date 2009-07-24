@@ -53,6 +53,11 @@ package
             var pos : Point = tunnel.getPos(tunnelPos);
             x = (VIEWPORT_WIDTH/2) - pos.x;
             y = (VIEWPORT_HEIGHT/2) - pos.y;
+
+            var head : Number = tunnel.getHead();
+            var pos : Point = tunnel.getPos(head + 1);
+            var newEnemy : Enemy = new Enemy(this, pos, head*8 + 8);
+            addEnemy(newEnemy);
         }
 
         [Embed(source="surface.jpg")]

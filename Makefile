@@ -6,6 +6,7 @@ tunnelgame.swf : \
 	Bullet.as \
 	Controller.as \
 	Enemy.as \
+	EnemyBoss1.as \
 	EnemyBullet.as \
 	FontCollection.as \
 	GUIButton.as \

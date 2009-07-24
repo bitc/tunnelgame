@@ -5,14 +5,9 @@ package
     import flash.display.Shape;
     import flash.display.Bitmap;
 
-    public class Enemy extends Sprite
+    public class EnemyBoss1 extends Enemy
     {
-        // TODO temporary:
-        [Embed(source="testship01.png")]
-        private static var Sprite : Class;
-        private static var sprite : Bitmap = new Sprite();
-
-        public function Enemy(world_ : World, pos_ : Point, tunnelQuad_ : uint)
+        public function EnemyBoss1(world_ : World, pos_ : Point, tunnelQuad_ : uint)
         {
             mouseEnabled = false;
             mouseChildren = false;
@@ -31,13 +26,15 @@ package
             graphics.drawCircle(0, 0, RADIUS);
             graphics.endFill();
 
+            sprite = new Sprite();
+
             var spriteShape : Shape = new Shape();
             spriteShape.graphics.lineStyle();
             spriteShape.graphics.beginBitmapFill(sprite.bitmapData);
-            spriteShape.graphics.drawRect(0, 0, 128, 128);
+            spriteShape.graphics.drawRect(0, 0, 240, 243);
             spriteShape.graphics.endFill();
-            spriteShape.x = -64;
-            spriteShape.y = -64;
+            spriteShape.x = -120;
+            spriteShape.y = -121;
             addChild(spriteShape);
 
             turretShape = new Shape();
@@ -172,6 +169,12 @@ package
         {
             private var dead : Boolean;
         }
+
+
+        // TODO temporary:
+        [Embed(source="boss1.png")]
+        private var Sprite : Class;
+        private var sprite : Bitmap;
     }
 }
 
